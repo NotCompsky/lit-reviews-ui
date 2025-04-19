@@ -21,7 +21,7 @@ def standardise_tag(tag:str):
 	return tag
 
 
-def md2html(tmp_fp:str, s:str):
+def md2html(path_to_md2html:str, tmp_fp:str, s:str):
 	with open(tmp_fp, "w") as f:
 		f.write(s)
 	
@@ -178,7 +178,7 @@ def process_dir(musicdir:str, tags_for_all:list, srcdir:str, dirroots:list, dstd
 								full_music_fp = musicdir+music_url
 							shutil.copy(full_music_fp,  dstdir + "/" + music_url)
 					
-					htmlcontent = md2html(tmp_fp, s[offset1:])
+					htmlcontent = md2html(path_to_md2html, tmp_fp, s[offset1:])
 				
 				metadata:list = [metadata_d["title"], metadata_d["subtitle"], metadata_d["authors"], metadata_d["tags"], metadata_d["stars"], coverimg_fp, htmlcontent, metadata_d["url"], metadata_d["music"]]
 				
@@ -221,16 +221,17 @@ if __name__ == "__main__":
 	screeds:dict = {}
 	with open(args.srcdir+"/screeds.yaml", "r") as f:
 		for key, val in yaml.safe_load(f.read()).items():
-			screeds[key] = md2html(args.dstdir + "/tmp_md2html.html", val)
+			screeds[key] = md2html(args.md2html_path, args.dstdir + "/tmp_md2html.html", val)
 	
 	tag2parents:dict = {}
-	TAG_HEIRARCHY_STR:str = None
+	TAG_HEIRARCHY_STR:str = ""
 	try:
 		with open(args.srcdir+"/tag-heirarchy.txt", "r") as f:
 			TAG_HEIRARCHY_STR = f.read()
 	except FileNotFoundError:
 		pass
-	process_tag_heirarchy_str(TAG_HEIRARCHY_STR, tag2parents)
+	if TAG_HEIRARCHY_STR != "":
+		process_tag_heirarchy_str(TAG_HEIRARCHY_STR, tag2parents)
 	
 	ALL_CATEGORY_TAGS:list = []
 	for tagname in screeds:
