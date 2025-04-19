@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Literature Reviews</title>
+	<link rel="stylesheet" href="/styl.css"/>
+	<link rel="stylesheet" href="books.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body class="darktheme">
+	<div id="sitewide_header">
+		<a href="..">agray.org</a> &gt; Literature Reviews
+	</div>
+
+
+<details id="filters_container">
+	<summary>Additional Options</summary>
+	<div class="filter_group">
+		<b>Score</b>
+		<input id="filter_input_score_min" type="number" step="1" min="0" max="10" value="0"/> to <input id="filter_input_score_max" type="number" step="1" min="0" max="10" value="10"/>
+	</div>
+	<div class="filter_group">
+		<b>Tags</b>
+		<label>Add <select id="filter_tags_selection"></select></label>
+		<!-- <div><label for="poop1">Add</label> <input type="checkbox" autocomplete="off" id="poop1"/><ul id="filter_tags_selection" class="css_select"></ul></div> -->
+	</div>
+	<div class="filter_group">
+		<b>Authors</b>
+		<label>Add <select id="filter_authors_selection"></select></label>
+		<!-- <div><label for="poop2">Add</label> <input type="checkbox" autocomplete="off" id="poop2"/><ul id="filter_authors_selection" class="css_select"></ul></div> -->
+	</div>
+	<div class="filter_group">
+		<b>Current filter</b>
+		<input id="current_filter" value="tags.include(book) &amp;&amp; tags.include(fiction)" disabled/>
+		<details>
+			<summary>Additional filter options</summary>
+			<p><b>Advanced variables</b>: description_length</p>
+			<label>Click here to edit the filter string directly: <input type="checkbox" id="current_filter__edit"/>
+		</details>
+	</div>
+	
+	<div id="displayas_container">
+		<div class="display_group">
+			<b>Display as:</b><br>
+			<label><input type="radio" autocomplete="off" class="displayasradiobtn" name="displayas" checked/> Full</label><br>
+			<label><input type="radio" autocomplete="off" class="displayasradiobtn" name="displayas"/> Text</label>
+		</div>
+		<div class="display_group">
+			<b>Show/Hide:</b><br>
+			<label><input type="checkbox" id="showhide_tags_" autocomplete="off" checked/> Tags</label><br>
+			<label><input type="checkbox" id="showhide_descr" autocomplete="off" checked/> First line of description</label>
+		</div>
+		<div class="display_group">
+			<b>Download:</b> <a href="" download="literature-review.html">click here</a><br>
+			<p><b>NOTE</b>: This does not download images or audio</p>
+		</div>
+	</div>
+</details>
+	<div>
+		Current tag filter: <span id="filter_tags_current"></span>
+	</div>
+	<div>
+		Current author filter: <span id="filter_authors_current"></span>
+	</div>
+	<div>
+		<b>Show only:</b>
+		<div class="display_group_w_subgroups">
+			<div class="display_subgroup">
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x=""/> Any</label>
+			</div>
+			<div class="display_subgroup">
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="movie"/> Movies</label><br>
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="tv-show"/> TV</label><br>
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="youtuber"/> Youtubers</label>
+			</div>
+			<div class="display_subgroup">
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="art"/> Art</label><br>
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="book" checked/> Books</label><br>
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="board-game"/> Board Games</label><br>
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="video-game"/> Video Games</label>
+			</div>
+			<div class="display_subgroup">
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="animal"/> Animals</label><br>
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="place"/> Places</label><br>
+				<!-- <label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="local-group"/> Cambridge Groups</label><br> -->
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="food"/> Foods</label><br>
+				<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="ui-idea"/> UI</label>
+			</div>
+		</div>
+	</div>
+<div id="screed_container"></div>
+<div id="reviewcontainer" class="hidden">
+	<span id="review_title"></span> <button id="closereview" class="rm">X</button>
+	<a id="review_link">Link</a>
+	<audio src="data:," id="review_audio" controls></audio>
+	<div id="review_html"></div>
+</div>
+<div id="results_container"></div>
+
+
+<script src="books.js"></script>
+</body>
+</html>
