@@ -1,3 +1,9 @@
+# Example
+
+![Image](https://github.com/user-attachments/assets/ddf782d8-611c-4431-a171-0b01bcbd6f2a)
+
+[Interactive version here](https://agray.org/bookrevs/)
+
 # Usage
 
 Source directory must have this structure:
