@@ -25,11 +25,17 @@ Source directory must have this structure:
     tag-heirarchy.txt (optional)
     screeds.yaml
 
+***
+
 `screeds.yaml` is a key-value dictionary for tag (key) to description (value), for example:
 
     some_tag_name: "Some description here."
     some_other_tag_name: "Blah blah blah..."
     ...
+
+Only tags listed in `screeds.yaml` are included in the final output.
+
+***
 
 `tag-heirarchy.txt` is optional. It is structured as a **tab**-indented file, and it describes how children inherit ancestor tags. In the following example, `ww2-eastern-front` has ancestor tags `germany, russia, european-country, country, ww2, war, politics`:
 
