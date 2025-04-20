@@ -267,6 +267,9 @@ if __name__ == "__main__":
 			content:str = f1.read()
 			
 			content = content.replace("HTMLTITLEHERE",config["title"])
+			content = content.replace("HTML_HEAD_POSTFIX_STUFF",config.get("html_head_postfix_stuff",""))
+			content = content.replace("HTML_BODY_PREFIX_STUFF",config.get("html_body_prefix_stuff",""))
+			content = content.replace("HTML_BODY_POSTFIX_STUFF",config.get("html_body_postfix_stuff",""))
 			
 			display_subgroups_html:str = ""
 			for group in config["display_groups"]:

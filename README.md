@@ -31,6 +31,9 @@ Source directory must have this structure:
 
     title: Some Title Here
     initial_checked: book
+    html_head_postfix_stuff: "" # optional
+    html_body_prefix_stuff: "" # optional
+    html_body_postfix_stuff: "" # optional
     display_groups:
       - [[movie, Movies], [tv-show: TV], [youtuber, Youtuber]]
       - [[art, Art], [book, Books], [board-game, Board Games], [video-game, Video Games]]
