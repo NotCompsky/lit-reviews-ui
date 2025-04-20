@@ -12,6 +12,7 @@ const tag2parents = {};
 		}
 		const tagname = line.substr(n_tabs);
 		
+		if (tagname.length !== 0){
 		let ls = tag2parents[tagname];
 		if (ls === undefined)
 			ls = [];
@@ -21,8 +22,8 @@ const tag2parents = {};
 			}
 		}
 		tag2parents[tagname] = ls;
-		
 		parents[n_tabs] = tagname;
+		}
 	}
 	while(true){
 		let n_changes = 0;

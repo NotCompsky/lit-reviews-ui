@@ -237,8 +237,8 @@ if __name__ == "__main__":
 	for tagname in screeds:
 		if tagname not in ALL_CATEGORY_TAGS:
 			ALL_CATEGORY_TAGS.append(tagname)
-		imgindx = process_dir(args.audio_root_dir, [tagname], args.srcdir+"/"+tagname, [
-			os.path.dirname(__file__)+"/"+tagname+"/"
+		imgindx = process_dir(args.audio_root_dir+"/", [tagname], args.srcdir+"/"+tagname, [
+			args.srcdir+"/"+tagname+"/"
 		], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	
 	origfp2thumbfp["imgindx"] = imgindx
