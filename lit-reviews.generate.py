@@ -218,10 +218,13 @@ if __name__ == "__main__":
 	imgindx:int = origfp2thumbfp["imgindx"]
 	empty_thumb_url:str = "finger.png"
 	
+	config:dict = None
+	with open(args.srcdir+"/config.yaml", "r") as f3:
+		config = yaml.safe_load(f3.read())
+	
 	screeds:dict = {}
-	with open(args.srcdir+"/screeds.yaml", "r") as f:
-		for key, val in yaml.safe_load(f.read()).items():
-			screeds[key] = md2html(args.md2html_path, args.dstdir + "/tmp_md2html.html", val)
+	for key, val in config["main_tag_descriptions"].items():
+		screeds[key] = md2html(args.md2html_path, args.dstdir + "/tmp_md2html.html", val)
 	
 	tag2parents:dict = {}
 	TAG_HEIRARCHY_STR:str = ""
@@ -263,17 +266,12 @@ if __name__ == "__main__":
 			content:str = f1.read()
 			
 			display_subgroups_html:str = ""
-			try:
-				with open(args.srcdir+"/display_subgroups.yaml", "r") as f3:
-					d:dict = yaml.safe_load(f3.read())
-					for group in d["groups"]:
-						display_subgroups_html += '<div class="display_subgroup">'
-						for tagname, tagtitle in group:
-							maybechecked:str = " checked" if (tagname==d["initial_checked"]) else ""
-							display_subgroups_html += f'<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="{tagname}"{maybechecked}/> {tagtitle}</label><br>'
-						display_subgroups_html += '</div>'
-			except FileNotFoundError:
-				pass
+			for group in config["display_groups"]:
+				display_subgroups_html += '<div class="display_subgroup">'
+				for tagname, tagtitle in group:
+					maybechecked:str = " checked" if (tagname==config["initial_checked"]) else ""
+					display_subgroups_html += f'<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="{tagname}"{maybechecked}/> {tagtitle}</label><br>'
+				display_subgroups_html += '</div>'
 			
 			content = content.replace('DISPLAY_SUBGROUPS_HERE', display_subgroups_html)
 			#content = content.replace('<link rel="stylesheet" href="books.css"/>', '<style>'+css_contents+'</style>')
