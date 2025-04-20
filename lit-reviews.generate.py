@@ -259,6 +259,7 @@ if __name__ == "__main__":
 			js_contents = js_contents.replace("DATADUMPHERE",json.dumps({"screeds":screeds,"reviews":sorted(literature_metadata,key=lambda x:x[4],reverse=True)}))
 			js_contents = js_contents.replace("TAG_HEIRARCHY_STR", TAG_HEIRARCHY_STR)
 			js_contents = js_contents.replace("ALL_CATEGORY_TAGS", json.dumps(ALL_CATEGORY_TAGS)[1:-1])
+			js_contents = js_contents.replace("FIRST_MAIN_TAG_TO_DISPLAY",json.dumps(config["initial_checked"]))
 	with open(thisdir+"/lit-reviews.css", "r") as f1:
 		css_contents = f1.read()
 	with open(args.dstdir + "/index.html", "w") as f2:

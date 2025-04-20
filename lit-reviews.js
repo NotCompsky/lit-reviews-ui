@@ -511,7 +511,7 @@ const update_displayonly = key => {
 };
 
 // add_tag_to_filter(?.indexOf("fiction"));
-update_displayonly("book");
+update_displayonly(FIRST_MAIN_TAG_TO_DISPLAY);
 
 
 const is_any_author_gender = (author_bools, gender_id) => {
