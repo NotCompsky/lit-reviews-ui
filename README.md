@@ -29,6 +29,7 @@ Source directory must have this structure:
 
 `config.yaml` must have this structure:
 
+    title: Some Title Here
     initial_checked: book
     display_groups:
       - [[movie, Movies], [tv-show: TV], [youtuber, Youtuber]]

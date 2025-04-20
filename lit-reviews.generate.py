@@ -266,6 +266,8 @@ if __name__ == "__main__":
 		with open(thisdir+"/lit-reviews.html", "r") as f1:
 			content:str = f1.read()
 			
+			content = content.replace("HTMLTITLEHERE",config["title"])
+			
 			display_subgroups_html:str = ""
 			for group in config["display_groups"]:
 				display_subgroups_html += '<div class="display_subgroup">'
