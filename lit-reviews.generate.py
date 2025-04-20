@@ -261,6 +261,21 @@ if __name__ == "__main__":
 	with open(args.dstdir + "/index.html", "w") as f2:
 		with open(thisdir+"/lit-reviews.html", "r") as f1:
 			content:str = f1.read()
+			
+			display_subgroups_html:str = ""
+			try:
+				with open(args.srcdir+"/display_subgroups.yaml", "r") as f3:
+					d:dict = yaml.safe_load(f3.read())
+					for group in d["groups"]:
+						display_subgroups_html += '<div class="display_subgroup">'
+						for tagname, tagtitle in group:
+							maybechecked:str = " checked" if (tagname==d["initial_checked"]) else ""
+							display_subgroups_html += f'<label><input type="radio" autocomplete="off" class="displayonlyradiobtn" name="displayonly" data-x="{tagname}"{maybechecked}/> {tagtitle}</label><br>'
+						display_subgroups_html += '</div>'
+			except FileNotFoundError:
+				pass
+			
+			content = content.replace('DISPLAY_SUBGROUPS_HERE', display_subgroups_html)
 			#content = content.replace('<link rel="stylesheet" href="books.css"/>', '<style>'+css_contents+'</style>')
 			#content = content.replace('<script src="books.js"></script>', '<script>'+js_contents+'</script>')
 			f2.write(content)
