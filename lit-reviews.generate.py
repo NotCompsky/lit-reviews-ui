@@ -247,9 +247,10 @@ if __name__ == "__main__":
 	for tagname in screeds:
 		if tagname not in ALL_CATEGORY_TAGS:
 			ALL_CATEGORY_TAGS.append(tagname)
-		imgindx = process_dir(args.audio_root_dir+"/", [tagname], args.srcdir+"/"+tagname, [
-			args.srcdir+"/"+tagname+"/"
-		], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
+		if os.path.isdir(args.srcdir+"/"+tagname):
+			imgindx = process_dir(args.audio_root_dir+"/", [tagname], args.srcdir+"/"+tagname, [
+				args.srcdir+"/"+tagname+"/"
+			], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	
 	origfp2thumbfp["imgindx"] = imgindx
 	
@@ -266,7 +267,7 @@ if __name__ == "__main__":
 			js_contents = js_contents.replace("DATADUMPHERE",json.dumps({"screeds":screeds,"reviews":sorted(literature_metadata,key=lambda x:x[4],reverse=True)}))
 			js_contents = js_contents.replace("TAG_HEIRARCHY_STR", TAG_HEIRARCHY_STR)
 			js_contents = js_contents.replace("ALL_CATEGORY_TAGS", json.dumps(ALL_CATEGORY_TAGS)[1:-1])
-			js_contents = js_contents.replace("FIRST_MAIN_TAG_TO_DISPLAY",json.dumps(config["initial_checked"]))
+			js_contents = js_contents.replace("FIRST_MAIN_TAG_TO_DISPLAY",json.dumps(config["initial_checked"] or ""))
 	with open(thisdir+"/lit-reviews.css", "r") as f1:
 		css_contents = f1.read()
 	with open(args.dstdir + "/index.html", "w") as f2:
