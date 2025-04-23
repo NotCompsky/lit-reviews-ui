@@ -174,8 +174,10 @@ def process_dir(musicdir:str, tags_for_all:list, srcdir:str, dirroots:list, dstd
 							full_music_fp:str = music_url
 							if music_url.startswith("/"):
 								music_url = os.path.basename(music_url)
+							elif musicdir is None:
+								raise ValueError("Config file does not specify audio_root_directory, but audio path is relative: " + music_url)
 							else:
-								full_music_fp = musicdir+music_url
+								full_music_fp = musicdir+"/"+music_url
 							
 							dst_music_fp:str = dstdir + "/" + music_url
 							
@@ -205,7 +207,6 @@ if __name__ == "__main__":
 	
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--md2html-path", default="md_to_html")
-	parser.add_argument("--audio-root-dir", default="./_audio", help="If \"music=<path>\" uses a relative path, this is the parent directory")
 	parser.add_argument("--srcdir", default=".")
 	parser.add_argument("dstdir")
 	args = parser.parse_args()
@@ -248,7 +249,7 @@ if __name__ == "__main__":
 		if tagname not in ALL_CATEGORY_TAGS:
 			ALL_CATEGORY_TAGS.append(tagname)
 		if os.path.isdir(args.srcdir+"/"+tagname):
-			imgindx = process_dir(args.audio_root_dir+"/", [tagname], args.srcdir+"/"+tagname, [
+			imgindx = process_dir(config["audio_root_directory"], [tagname], args.srcdir+"/"+tagname, [
 				args.srcdir+"/"+tagname+"/"
 			], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	

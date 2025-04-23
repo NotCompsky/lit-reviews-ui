@@ -31,6 +31,7 @@ Source directory must have this structure:
 
     title: Some Title Here
     initial_checked: book
+    audio_root_directory: null # If a markdown file's prefix's "music=<path>" uses a relative path, this is the parent directory
     html_head_postfix_stuff: "" # optional
     html_body_prefix_stuff: "" # optional
     html_body_postfix_stuff: "" # optional
