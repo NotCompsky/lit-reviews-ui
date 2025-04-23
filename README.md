@@ -72,3 +72,14 @@ Only each tag listed in `main_tag_descriptions` must have its contents in a subd
         vietnam-war
     politics
         war
+
+***
+
+The output is an HTML file, and its associated CSS/JS files; and the thumbnails:
+
+    index.html
+    books.css
+    books.js
+    1.jpg
+    2.jpg
+    ...
