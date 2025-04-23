@@ -176,7 +176,14 @@ def process_dir(musicdir:str, tags_for_all:list, srcdir:str, dirroots:list, dstd
 								music_url = os.path.basename(music_url)
 							else:
 								full_music_fp = musicdir+music_url
-							shutil.copy(full_music_fp,  dstdir + "/" + music_url)
+							
+							dst_music_fp:str = dstdir + "/" + music_url
+							
+							stat1 = os.stat(full_music_fp)
+							stat2 = os.stat(dst_music_fp)
+							
+							if stat1.st_size != stat2.st_size:
+								shutil.copy(full_music_fp, dst_music_fp)
 					
 					htmlcontent = md2html(path_to_md2html, tmp_fp, s[offset1:])
 				
