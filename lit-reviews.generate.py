@@ -253,6 +253,11 @@ if __name__ == "__main__":
 				args.srcdir+"/"+tagname+"/"
 			], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	
+	if os.path.isdir(args.srcdir+"/all"):
+		imgindx = process_dir(config["audio_root_directory"], [], args.srcdir+"/all", [
+			args.srcdir+"/all/"
+		], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
+	
 	origfp2thumbfp["imgindx"] = imgindx
 	
 	with open(origfp2thumbfp_fp, "w") as f:
