@@ -71,6 +71,7 @@ def obey_exif(img):
 
 def process_dir(md_filepaths_to_content_prefixes:dict, musicdir:str, tags_for_all:list, rootdir:str, relativedirpath:str, dirroots:list, dstdir:str, path_to_md2html:str, literature_metadata:list, imgindx:int, origfp2thumbfp:dict, empty_thumb_url:str, tag2parents:dict):
 	tmp_fp:str = dstdir + "/tmp_md2html.html"
+	srcdir:str = rootdir + "/" + relativedirpath
 	for fname in sorted(os.listdir(srcdir)): # "1923" comes before "1923.md"
 		fp:str = srcdir + "/" + fname
 		if fname.endswith(".md"):
