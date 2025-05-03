@@ -287,7 +287,7 @@ const display_book_review_onclickfn = e => {
 	const [title,subtitle,authors,tags,score,coverimg_url,content,url,music] = sorted_books[book_indx];
 	
 	if (book_indx === currently_viewing_review_of_indx)
-		reviewcontainer.classList.toggle("hidden");
+		reviewcontainer.close();
 	else {
 		currently_viewing_review_of_indx = book_indx;
 		
@@ -308,15 +308,14 @@ const display_book_review_onclickfn = e => {
 		review_title.innerText = title;
 		review_html.innerHTML =  content;
 		
-		reviewcontainer.classList.remove("hidden");
+		reviewcontainer.showModal();
 	}
-	reviewcontainer.scrollIntoView();
 };
 for (let node of results_container.getElementsByClassName("clicktogetreview")){
 	node.addEventListener("pointerup", display_book_review_onclickfn);
 }
 document.getElementById("closereview").addEventListener("pointerup", ()=>{
-	reviewcontainer.classList.add("hidden");
+	reviewcontainer.close();
 });
 
 const add_tag_to_filter = indx => {

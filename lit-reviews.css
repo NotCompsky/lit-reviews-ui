@@ -16,6 +16,15 @@ img {
 	--flexorinline:flex;
 	--marginornothing:1em;
 }
+::backdrop {
+	/* A solid colour has to be quite intense in order to convey the intended message (that actions are disabled) - which would force me to 'flashbang' viewers with white (if darktheme) for modal popups. This multicolour background is much softer. */
+	background-image: linear-gradient(
+		45deg in oklch,
+		oklch(70% 0.50 68) 0%,
+		oklch(90% 0.5 200) 100%
+	);
+	opacity: 0.3;
+}
 #results_container.results_as_str {
 	--hideiftxtonly:none;
 	--hideifnottxtonly:inline;
@@ -310,12 +319,22 @@ input:checked + .css_select {
 
 
 
+#reviewcontainer {
+	margin:auto;
+	max-width:80ch;
+}
+#reviewcontainer :where(img, video) {
+	max-width:100%;
+}
 
 
+#closereview {
+	float:right;
+}
 
 
 /* Using border-image, from https://css-tricks.com/revisiting-css-border-image/ */
-:is(#screed_container, #reviewcontainer):not(:empty){
+#screed_container:not(:empty){
 margin-block-end: var(--spacing-l);
 margin-inline: var(--spacing-m);
 padding: 50px 55px;
