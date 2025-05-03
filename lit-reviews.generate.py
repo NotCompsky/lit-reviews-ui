@@ -7,7 +7,31 @@ import subprocess
 import json
 import re
 import shutil
+from datetime import datetime
 
+
+def process_oirjgoirioerre(m):
+	start:int = m.start()
+	if (
+		(start == 0) or
+		((m.string[start-1] == "\n") and ((start == 1) or (m.string[start-2] == "\n")))
+	):
+		date, maybetitle, url, content = m.groups()
+		if date != "?":
+			for fmt in ("%Y-%m-%d","%Y/%m/%d","%d-%m-%Y","%d/%m/%Y","%d %b %Y","%d %B %Y"):
+				try:
+					t = datetime.strptime(date, fmt)
+				except ValueError:
+					pass
+				else:
+					date = t.strftime("%d %B %Y")
+					break
+		if maybetitle:
+			maybetitle = ": " + maybetitle
+		content = re.sub("(?:^|\n)(?:    |\t)(.*)", "<blockquote>\\1</blockquote>", content)
+		return f'<a href="{url}">{date}{maybetitle}</a>\n\n{content}\n\n'
+	else:
+		return m.group(0)
 
 def standardise_tag(tag:str):
 	'''if tag in (
