@@ -69,7 +69,7 @@ def obey_exif(img):
 	return img
 
 
-def process_dir(musicdir:str, tags_for_all:list, srcdir:str, dirroots:list, dstdir:str, path_to_md2html:str, literature_metadata:list, imgindx:int, origfp2thumbfp:dict, empty_thumb_url:str, tag2parents:dict):
+def process_dir(md_filepaths_to_content_prefixes:dict, musicdir:str, tags_for_all:list, rootdir:str, relativedirpath:str, dirroots:list, dstdir:str, path_to_md2html:str, literature_metadata:list, imgindx:int, origfp2thumbfp:dict, empty_thumb_url:str, tag2parents:dict):
 	tmp_fp:str = dstdir + "/tmp_md2html.html"
 	for fname in sorted(os.listdir(srcdir)): # "1923" comes before "1923.md"
 		fp:str = srcdir + "/" + fname
@@ -187,7 +187,14 @@ def process_dir(musicdir:str, tags_for_all:list, srcdir:str, dirroots:list, dstd
 							if stat1.st_size != stat2.st_size:
 								shutil.copy(full_music_fp, dst_music_fp)
 					
-					htmlcontent = md2html(path_to_md2html, tmp_fp, s[offset1:])
+					markdown_src:str = s[offset1:]
+					markdown_src = re.sub("([?]|[12][0-9]{3}[-/][0-9]{2}[-/][0-9]{2}|[0-9]{2} [A-Za-z][a-z]+ [12][0-9]{3}|[12][0-9]{3} [A-Za-z][a-z]+ [0-9]{2}|[0-9]{2}[-/][0-9]{2}[-/][12][0-9]{3})\n(?:(.*)\n)?(https?://[^ ]+)(?: +#.*)\n((?:.\n?)+)(?:\n\n|\n?$)", process_oirjgoirioerre, markdown_src)
+					
+					htmlcontent = md2html(path_to_md2html, tmp_fp, markdown_src)
+					
+					relativefilepath:str = relativedirpath + "/" + fname
+					if relativefilepath in md_filepaths_to_content_prefixes:
+						htmlcontent = md_filepaths_to_content_prefixes[relativefilepath] + htmlcontent
 				
 				metadata:list = [metadata_d["title"], metadata_d["subtitle"], metadata_d["authors"], metadata_d["tags"], metadata_d["stars"], coverimg_fp, htmlcontent, metadata_d["url"], metadata_d["music"]]
 				
@@ -234,6 +241,12 @@ if __name__ == "__main__":
 	for key, val in config["main_tag_descriptions"].items():
 		screeds[key] = md2html(args.md2html_path, args.dstdir + "/tmp_md2html.html", val)
 	
+	md_filepaths_to_content_prefixes:dict = {}
+	md_filepaths_to_content_prefixes_json:str = config.get("md_filepaths_to_content_prefixes_json")
+	if md_filepaths_to_content_prefixes_json is not None:
+		with open(md_filepaths_to_content_prefixes_json, "r") as f:
+			md_filepaths_to_content_prefixes = json.load(f)
+	
 	tag2parents:dict = {}
 	TAG_HEIRARCHY_STR:str = ""
 	try:
@@ -249,12 +262,12 @@ if __name__ == "__main__":
 		if tagname not in ALL_CATEGORY_TAGS:
 			ALL_CATEGORY_TAGS.append(tagname)
 		if os.path.isdir(args.srcdir+"/"+tagname):
-			imgindx = process_dir(config["audio_root_directory"], [tagname], args.srcdir+"/"+tagname, [
+			imgindx = process_dir(md_filepaths_to_content_prefixes, config["audio_root_directory"], [tagname], args.srcdir, tagname, [
 				args.srcdir+"/"+tagname+"/"
 			], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	
 	if os.path.isdir(args.srcdir+"/all"):
-		imgindx = process_dir(config["audio_root_directory"], [], args.srcdir+"/all", [
+		imgindx = process_dir(md_filepaths_to_content_prefixes, config["audio_root_directory"], [], args.srcdir, "all", [
 			args.srcdir+"/all/"
 		], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	

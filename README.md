@@ -41,6 +41,7 @@ For each tag in `main_tag_descriptions` (below), any content within the correspo
     html_head_postfix_stuff: "" # optional
     html_body_prefix_stuff: "" # optional
     html_body_postfix_stuff: "" # optional
+    md_filepaths_to_content_prefixes_json: null # optional
     display_groups:
       - [[movie, Movies], [tv-show: TV], [youtuber, Youtuber]]
       - [[art, Art], [book, Books], [board-game, Board Games], [video-game, Video Games]]
