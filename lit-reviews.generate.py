@@ -257,17 +257,21 @@ if __name__ == "__main__":
 	if TAG_HEIRARCHY_STR != "":
 		process_tag_heirarchy_str(TAG_HEIRARCHY_STR, tag2parents)
 	
+	audio_root_directory:str = config["audio_root_directory"]
+	if not audio_root_directory.startswith("/"):
+		audio_root_directory = args.srcdir + "/" + audio_root_directory
+	
 	ALL_CATEGORY_TAGS:list = []
 	for tagname in screeds:
 		if tagname not in ALL_CATEGORY_TAGS:
 			ALL_CATEGORY_TAGS.append(tagname)
 		if os.path.isdir(args.srcdir+"/"+tagname):
-			imgindx = process_dir(md_filepaths_to_content_prefixes, config["audio_root_directory"], [tagname], args.srcdir, tagname, [
+			imgindx = process_dir(md_filepaths_to_content_prefixes, audio_root_directory, [tagname], args.srcdir, tagname, [
 				args.srcdir+"/"+tagname+"/"
 			], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	
 	if os.path.isdir(args.srcdir+"/all"):
-		imgindx = process_dir(md_filepaths_to_content_prefixes, config["audio_root_directory"], [], args.srcdir, "all", [
+		imgindx = process_dir(md_filepaths_to_content_prefixes, audio_root_directory, [], args.srcdir, "all", [
 			args.srcdir+"/all/"
 		], args.dstdir, args.md2html_path, literature_metadata, imgindx, origfp2thumbfp, empty_thumb_url, tag2parents)
 	
